@@ -69,11 +69,15 @@ const Navbar = () => {
                                 {user?.picture ? (
                                     <img src={user.picture} alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 object-cover" />
                                 ) : (
-                                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold border border-blue-200">
-                                        {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xs shadow-sm shadow-blue-200">
+                                        {user?.name ? user.name.charAt(0).toUpperCase() : <User size={14} />}
                                     </div>
                                 )}
-                                <ChevronDown size={16} className="text-slate-400 hidden sm:block" />
+                                <div className="hidden sm:flex flex-col items-start -space-y-1">
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Account</span>
+                                    <span className="text-xs font-bold text-slate-700 max-w-[80px] truncate">{user?.name || 'User'}</span>
+                                </div>
+                                <ChevronDown size={14} className="text-slate-400 hidden sm:block ml-1" />
                             </button>
 
                             {profileOpen && (
