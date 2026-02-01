@@ -18,10 +18,17 @@ const Vehicles = () => {
 
     const fetchVehicles = () => {
         setLoading(true);
-        fetch(`${API_URL}/vehicles`)
+        const token = localStorage.getItem('token');
+        fetch(`${API_URL}/vehicles`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
-                setVehicles(data);
+                if (Array.isArray(data)) {
+                    setVehicles(data);
+                }
                 setLoading(false);
             })
             .catch(err => {
@@ -36,6 +43,7 @@ const Vehicles = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
         const payload = {
             ...formData,
             location: (formData.lat && formData.lng) ? { lat: parseFloat(formData.lat), lng: parseFloat(formData.lng) } : undefined
@@ -44,7 +52,10 @@ const Vehicles = () => {
         try {
             const res = await fetch(`${API_URL}/vehicles`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify(payload)
             });
             if (res.ok) {

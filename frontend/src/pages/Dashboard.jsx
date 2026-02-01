@@ -40,9 +40,18 @@ const Dashboard = () => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
     useEffect(() => {
-        fetch(`${API_URL}/vehicles`)
+        const token = localStorage.getItem('token');
+        fetch(`${API_URL}/vehicles`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
-            .then(data => setVehicles(data))
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setVehicles(data);
+                }
+            })
             .catch(err => console.error(err));
     }, []);
 

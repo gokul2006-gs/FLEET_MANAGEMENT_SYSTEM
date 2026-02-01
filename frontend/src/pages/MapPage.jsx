@@ -12,10 +12,17 @@ const MapPage = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`${API_URL}/vehicles`)
+        const token = localStorage.getItem('token');
+        fetch(`${API_URL}/vehicles`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
-                setVehicles(data);
+                if (Array.isArray(data)) {
+                    setVehicles(data);
+                }
                 setLoading(false);
             })
             .catch(err => {

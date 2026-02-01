@@ -14,10 +14,17 @@ const Drivers = () => {
 
     const fetchDrivers = () => {
         setLoading(true);
-        fetch(`${API_URL}/drivers`)
+        const token = localStorage.getItem('token');
+        fetch(`${API_URL}/drivers`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
-                setDrivers(data);
+                if (Array.isArray(data)) {
+                    setDrivers(data);
+                }
                 setLoading(false);
             })
             .catch(err => {
@@ -32,10 +39,14 @@ const Drivers = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
         try {
             const res = await fetch(`${API_URL}/drivers`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify(formData)
             });
             if (res.ok) {
