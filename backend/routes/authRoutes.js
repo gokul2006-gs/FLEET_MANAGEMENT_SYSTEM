@@ -28,6 +28,7 @@ router.post('/register', async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            picture: user.picture,
             token: generateToken(user._id)
         });
     } catch (err) {
@@ -45,6 +46,7 @@ router.post('/login', async (req, res) => {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
+                picture: user.picture,
                 token: generateToken(user._id)
             });
         } else {
