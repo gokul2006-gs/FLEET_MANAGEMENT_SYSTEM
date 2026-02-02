@@ -21,6 +21,7 @@ const Profile = () => {
                                     src={user.picture}
                                     alt={user.name}
                                     className="w-24 h-24 rounded-2xl border-4 border-white shadow-lg object-cover"
+                                    referrerPolicy="no-referrer"
                                 />
                             ) : (
                                 <div className="w-24 h-24 rounded-2xl border-4 border-white shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-bold">

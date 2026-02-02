@@ -67,7 +67,12 @@ const Navbar = () => {
                                 className="flex items-center gap-2 hover:bg-slate-50 p-1 pr-2 rounded-full transition-colors"
                             >
                                 {user?.picture ? (
-                                    <img src={user.picture} alt="Profile" className="w-8 h-8 rounded-full border border-gray-200 object-cover" />
+                                    <img
+                                        src={user.picture}
+                                        alt="Profile"
+                                        className="w-8 h-8 rounded-full border border-gray-200 object-cover"
+                                        referrerPolicy="no-referrer"
+                                    />
                                 ) : (
                                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xs shadow-sm shadow-blue-200">
                                         {user?.name ? user.name.charAt(0).toUpperCase() : <User size={14} />}
