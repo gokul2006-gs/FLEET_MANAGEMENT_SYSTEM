@@ -76,6 +76,12 @@ router.post('/google', async (req, res) => {
                 googleId: sub,
                 password: '' // No password for Google users
             });
+        } else {
+            // Update name and picture if they changed in Google
+            user.name = name;
+            user.picture = picture;
+            user.googleId = sub;
+            await user.save();
         }
 
         res.json({
