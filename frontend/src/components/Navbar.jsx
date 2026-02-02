@@ -86,9 +86,18 @@ const Navbar = () => {
                                         <p className="text-sm font-bold text-slate-800 truncate">{user?.name}</p>
                                         <p className="text-xs text-slate-500 truncate">{user?.email}</p>
                                     </div>
+                                    <div className="py-1">
+                                        <NavLink
+                                            to="/profile"
+                                            onClick={() => setProfileOpen(false)}
+                                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+                                        >
+                                            <User size={16} /> User Profile
+                                        </NavLink>
+                                    </div>
                                     <button
                                         onClick={logout}
-                                        className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                                        className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"
                                     >
                                         <LogOut size={16} /> Sign Out
                                     </button>
@@ -120,6 +129,20 @@ const Navbar = () => {
                                 {item.name}
                             </NavLink>
                         ))}
+                        <NavLink
+                            to="/profile"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={({ isActive }) =>
+                                `flex items-center gap-3 px-3 py-3 rounded-lg text-base font-medium
+                ${isActive
+                                    ? 'bg-blue-50 text-blue-600'
+                                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                                }`
+                            }
+                        >
+                            <User size={18} />
+                            User Profile
+                        </NavLink>
                         <button
                             onClick={logout}
                             className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-base font-medium text-red-600 hover:bg-red-50"

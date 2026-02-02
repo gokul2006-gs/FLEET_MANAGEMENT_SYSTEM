@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Drivers from './pages/Drivers';
 import MapPage from './pages/MapPage';
+import Profile from './pages/Profile';
 import { AuthContext } from './context/AuthContext';
 
 // Protected Route Component
@@ -35,6 +36,7 @@ function App() {
           <Route path="drivers" element={<Drivers />} />
           <Route path="fuel" element={<Fuel />} />
           <Route path="map" element={<MapPage />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>
