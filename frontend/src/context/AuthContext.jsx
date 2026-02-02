@@ -4,8 +4,24 @@ import { jwtDecode } from 'jwt-decode';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const refreshUser = async (token) => {
+        try {
+            const res = await fetch(`${API_URL}/auth/profile`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                const userData = await res.json();
+                localStorage.setItem('user', JSON.stringify(userData));
+                setUser(userData);
+            }
+        } catch (err) {
+            console.error('Failed to sync user data', err);
+        }
+    };
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -16,7 +32,12 @@ export const AuthProvider = ({ children }) => {
                 if (decoded.exp * 1000 < Date.now()) {
                     logout();
                 } else {
-                    setUser(JSON.parse(localStorage.getItem('user')));
+                    const savedUser = localStorage.getItem('user');
+                    if (savedUser) {
+                        setUser(JSON.parse(savedUser));
+                    }
+                    // Always try to fetch fresh data to ensure UI is in sync
+                    refreshUser(token);
                 }
             } catch (e) {
                 logout();
@@ -38,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, logout, loading, refreshUser }}>
             {!loading && children}
         </AuthContext.Provider>
     );

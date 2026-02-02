@@ -2,11 +2,24 @@ import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, Search, User, ChevronDown, LayoutDashboard, Truck, Users, Fuel, Map as MapIcon, X, LogOut } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
+import { useEffect, useRef } from 'react';
 
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
     const { user, logout } = useContext(AuthContext);
+    const profileRef = useRef(null);
+
+    // Close dropdown on click outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setProfileOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const navItems = [
         { name: 'Dashboard', icon: <LayoutDashboard size={18} />, path: '/' },
@@ -61,10 +74,11 @@ const Navbar = () => {
                         <div className="h-6 w-px bg-gray-200 hidden sm:block"></div>
 
                         {/* Profile Dropdown */}
-                        <div className="relative">
+                        <div className="relative" ref={profileRef}>
                             <button
+                                type="button"
                                 onClick={() => setProfileOpen(!profileOpen)}
-                                className="flex items-center gap-2 hover:bg-slate-50 p-1 pr-2 rounded-full transition-colors"
+                                className="flex items-center gap-2 hover:bg-slate-50 p-1 pr-2 rounded-full transition-colors focus:outline-none"
                             >
                                 {user?.picture ? (
                                     <img
@@ -80,16 +94,16 @@ const Navbar = () => {
                                 )}
                                 <div className="hidden sm:flex flex-col items-start -space-y-1">
                                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Account</span>
-                                    <span className="text-xs font-bold text-slate-700 max-w-[80px] truncate">{user?.name || 'User'}</span>
+                                    <span className="text-xs font-bold text-slate-700 max-w-[100px] truncate">{user?.name || user?.email?.split('@')[0] || 'User'}</span>
                                 </div>
-                                <ChevronDown size={14} className="text-slate-400 hidden sm:block ml-1" />
+                                <ChevronDown size={14} className={`text-slate-400 hidden sm:block ml-1 transition-transform duration-200 ${profileOpen ? 'rotate-180' : ''}`} />
                             </button>
 
                             {profileOpen && (
-                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 origin-top-right">
+                                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 origin-top-right z-50">
                                     <div className="px-4 py-3 border-b border-gray-100">
-                                        <p className="text-sm font-bold text-slate-800 truncate">{user?.name}</p>
-                                        <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+                                        <p className="text-sm font-bold text-slate-800 truncate">{user?.name || 'User'}</p>
+                                        <p className="text-xs text-slate-500 truncate">{user?.email || 'No email'}</p>
                                     </div>
                                     <div className="py-1">
                                         <NavLink

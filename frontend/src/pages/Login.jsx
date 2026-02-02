@@ -9,12 +9,15 @@ const Login = () => {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     // Helper to determine API URL
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError('');
         try {
             const res = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
@@ -30,10 +33,14 @@ const Login = () => {
             }
         } catch (err) {
             setError('Login failed. Server error.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleGoogleSuccess = async (credentialResponse) => {
+        setIsLoading(true);
+        setError('');
         try {
             const res = await fetch(`${API_URL}/auth/google`, {
                 method: 'POST',
@@ -44,9 +51,13 @@ const Login = () => {
             if (res.ok) {
                 login(data, data.token);
                 navigate('/');
+            } else {
+                setError(data.message || 'Google Login failed');
             }
         } catch (err) {
-            setError('Google Login failed');
+            setError('Google Login failed. Server error.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -90,11 +101,23 @@ const Login = () => {
                         <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200"></div></div>
                         <div className="relative flex justify-center text-sm"><span className="px-2 bg-white text-gray-500">Or continue with</span></div>
                     </div>
-                    <div className="mt-6 flex justify-center">
-                        <GoogleLogin
-                            onSuccess={handleGoogleSuccess}
-                            onError={() => setError('Google Login Failed')}
-                        />
+                    <div className="mt-6 flex flex-col items-center">
+                        {isLoading ? (
+                            <div className="flex flex-col items-center gap-2">
+                                <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                                <p className="text-sm text-slate-500 font-medium">Authenticating...</p>
+                            </div>
+                        ) : (
+                            <GoogleLogin
+                                onSuccess={handleGoogleSuccess}
+                                onError={() => setError('Google Login Failed')}
+                                shape="pill"
+                                theme="outline"
+                                size="large"
+                                text="continue_with"
+                                width="320"
+                            />
+                        )}
                     </div>
                 </div>
 

@@ -23,13 +23,6 @@ app.use('/api/vehicles', require('./routes/vehicleRoutes'));
 app.use('/api/drivers', require('./routes/driverRoutes'));
 app.use('/api/routes', require('./routes/routeRoutes'));
 
-const dns = require('dns');
-try {
-    dns.setServers(['8.8.8.8', '8.8.4.4']);
-} catch (e) {
-    console.log("Could not set custom DNS servers");
-}
-
 // Database Connection
 const connectDB = async () => {
     try {

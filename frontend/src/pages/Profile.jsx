@@ -25,12 +25,12 @@ const Profile = () => {
                                 />
                             ) : (
                                 <div className="w-24 h-24 rounded-2xl border-4 border-white shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-3xl font-bold">
-                                    {user.name?.charAt(0).toUpperCase()}
+                                    {(user.name || user.email || 'U').charAt(0).toUpperCase()}
                                 </div>
                             )}
                             <div className="pb-2">
-                                <h1 className="text-2xl font-bold text-slate-800">{user.name}</h1>
-                                <p className="text-slate-500">{user.email}</p>
+                                <h1 className="text-2xl font-bold text-slate-800">{user.name || 'User Profile'}</h1>
+                                <p className="text-slate-500">{user.email || 'No email available'}</p>
                             </div>
                         </div>
                         <button
@@ -49,11 +49,11 @@ const Profile = () => {
                             <div className="space-y-3">
                                 <div className="flex justify-between p-3 bg-slate-50 rounded-xl">
                                     <span className="text-sm text-slate-500">Full Name</span>
-                                    <span className="text-sm font-bold text-slate-800">{user.name}</span>
+                                    <span className="text-sm font-bold text-slate-800">{user.name || 'Not set'}</span>
                                 </div>
                                 <div className="flex justify-between p-3 bg-slate-50 rounded-xl">
                                     <span className="text-sm text-slate-500">Email Address</span>
-                                    <span className="text-sm font-bold text-slate-800">{user.email}</span>
+                                    <span className="text-sm font-bold text-slate-800">{user.email || 'Not set'}</span>
                                 </div>
                                 <div className="flex justify-between p-3 bg-slate-50 rounded-xl">
                                     <span className="text-sm text-slate-500">Account Type</span>
