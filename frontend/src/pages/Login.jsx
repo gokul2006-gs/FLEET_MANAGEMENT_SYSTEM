@@ -116,6 +116,7 @@ const Login = () => {
                                 size="large"
                                 text="continue_with"
                                 width="320"
+                                use_fedcm_for_prompt={true}
                             />
                         )}
                     </div>
