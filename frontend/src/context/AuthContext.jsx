@@ -17,6 +17,9 @@ export const AuthProvider = ({ children }) => {
                 const userData = await res.json();
                 localStorage.setItem('user', JSON.stringify(userData));
                 setUser(userData);
+            } else if (res.status === 401 || res.status === 404) {
+                // Token invalid or User deleted/doesn't exist in this DB
+                logout();
             }
         } catch (err) {
             console.error('Failed to sync user data', err);
