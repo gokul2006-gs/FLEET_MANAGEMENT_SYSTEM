@@ -161,6 +161,29 @@ describe('Auth Routes', () => {
       expect(res.body.data.token).toBeDefined();
     });
 
+    test('normalizes a legacy FLEET_MANAGER user during login', async () => {
+      const mockUser = {
+        _id: 'user-id-legacy',
+        email: 'legacy@example.com',
+        role: 'FLEET_MANAGER',
+        comparePassword: jest.fn().mockResolvedValue(true),
+        save: jest.fn().mockResolvedValue(true),
+        toJSON: jest.fn().mockReturnValue({ _id: 'user-id-legacy', role: 'manager' }),
+      };
+
+      User.findOne.mockReturnValue({
+        select: jest.fn().mockResolvedValue(mockUser),
+      });
+
+      const res = await request(app)
+        .post('/api/auth/login')
+        .send({ email: 'legacy@example.com', password: 'password123' });
+
+      expect(res.status).toBe(200);
+      expect(mockUser.role).toBe('manager');
+      expect(mockUser.save).toHaveBeenCalled();
+    });
+
     test('returns 400 when email is missing', async () => {
       const res = await request(app)
         .post('/api/auth/login')

@@ -46,6 +46,9 @@ export const login = async (req, res) => {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
+    if (user.role?.toLowerCase() === 'fleet_manager') {
+      user.role = 'manager';
+    }
     user.lastLogin = new Date();
     await user.save();
 
