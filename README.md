@@ -1,72 +1,142 @@
-# SmartRoute — Smart Route Optimization System for Last-Mile Delivery
+<div align="center">
 
-A production-quality last-mile delivery route optimization platform with real Dijkstra and A* implementations, multi-stop optimization, 2-opt improvement, and a professional enterprise logistics control tower UI.
+<img src="https://readme-typing-svg.demolab.com?font=Space+Grotesk&weight=700&size=34&pause=900&color=2F80FF&center=true&vCenter=true&width=800&lines=SmartRoute;Last-mile+delivery%2C+optimized.;Plan.+Route.+Deliver.+Repeat." alt="SmartRoute animated title" />
 
-## Tech Stack
+<p>Real-time fleet intelligence for faster, smarter last-mile delivery.</p>
 
-### Frontend
-- React.js + Vite
-- Tailwind CSS
-- React Router
-- Mapbox GL JS
-- Recharts, Framer Motion, React Icons, React Hot Toast
-- Zustand (state management)
+<a href="https://github.com/gokul2006-gs/FLEET_MANAGEMENT_SYSTEM/stargazers"><img src="https://img.shields.io/github/stars/gokul2006-gs/FLEET_MANAGEMENT_SYSTEM?style=for-the-badge&color=2F80FF" alt="GitHub stars" /></a>
+<a href="https://github.com/gokul2006-gs/FLEET_MANAGEMENT_SYSTEM/issues"><img src="https://img.shields.io/github/issues/gokul2006-gs/FLEET_MANAGEMENT_SYSTEM?style=for-the-badge&color=22C55E" alt="GitHub issues" /></a>
+<img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React 18" />
+<img src="https://img.shields.io/badge/Node.js-18%2B-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js 18 or newer" />
 
-### Backend
-- Node.js + Express.js
-- MongoDB + Mongoose
-- JWT Authentication
-- bcrypt
+</div>
 
-## Getting Started
+## The Mission
 
-### Prerequisites
-- Node.js 18+
-- MongoDB (local or Atlas)
-- Mapbox access token
+SmartRoute is an operations control tower for delivery teams. It combines live fleet visibility, authenticated workflows, route planning, and practical optimization algorithms in one focused interface.
 
-### Backend Setup
-```bash
+<div align="center">
+
+```text
+Orders  ──▶  Route graph  ──▶  A* / Dijkstra  ──▶  2-opt  ──▶  Driver-ready routes
+   │              │                  │               │
+   └──────────────┴────────────── Analytics ─────────┘
+```
+
+</div>
+
+## What Moves
+
+| Control Tower | Optimization Lab | Fleet Operations |
+| --- | --- | --- |
+| Google Maps live views | Dijkstra and A* | Orders and time windows |
+| Vehicle markers and routes | Nearest Neighbor sequencing | Drivers and vehicles |
+| Notifications and alerts | 2-opt route improvement | Capacity-aware assignment |
+| Analytics dashboards | Algorithm benchmarking | JWT-protected API |
+
+## Stack
+
+**Frontend** React, Vite, Tailwind CSS, React Router, Google Maps JavaScript API, Recharts, Framer Motion, Zustand
+
+**Backend** Node.js, Express, MongoDB, Mongoose, JWT, bcrypt, Jest, Supertest
+
+## Quick Start
+
+### Requirements
+
+- Node.js 18 or newer
+- MongoDB local or MongoDB Atlas
+- Google Cloud project with **Maps JavaScript API** enabled
+
+### 1. Start the API
+
+```powershell
 cd backend
-cp .env.example .env  # Fill in your values
+copy .env.example .env
 npm install
 npm run dev
 ```
 
-### Frontend Setup
-```bash
+The API runs at `http://localhost:5000`.
+
+### 2. Configure and start the frontend
+
+Add your values to `frontend/.env`:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+VITE_GOOGLE_MAPS_API_KEY=your_browser_restricted_key
+```
+
+Then run:
+
+```powershell
 cd frontend
-cp .env.example .env  # Fill in your values
 npm install
 npm run dev
 ```
 
-### Seed Data
-```bash
+Open `http://localhost:5173`.
+
+<details>
+<summary><strong>Optional: seed demo data</strong></summary>
+
+```powershell
 cd backend
 npm run seed
 ```
 
-## Project Structure
-```
-smart-route/
-├── frontend/          # React + Vite frontend
-├── backend/           # Express.js backend
-├── README.md
-├── .gitignore
-└── .env.example
+</details>
+
+## Architecture
+
+```mermaid
+flowchart LR
+	UI[React Control Tower] --> MAP[Google Maps JavaScript API]
+	UI --> API[Express REST API]
+	API --> AUTH[JWT Auth]
+	API --> DB[(MongoDB)]
+	API --> OPT[Optimization Service]
+	OPT --> ALG[A* / Dijkstra / 2-opt]
+	OPT --> ASSIGN[Vehicle Assignment]
 ```
 
-## Features
-- Dashboard / Command Center with live map
-- Order, Vehicle, Driver management
-- Route optimization with Dijkstra & A*
-- Multi-stop sequencing (Nearest Neighbor)
-- 2-opt route improvement
-- Vehicle assignment with capacity constraints
-- Time window validation
-- Timeline view
-- Algorithm benchmarking
-- Live route simulation
-- Analytics dashboard
-- Dark/Light mode
+## Project Layout
+
+```text
+smart-route/
+├── frontend/              # React + Vite control tower
+│   └── src/pages/         # Dashboard, maps, operations, analytics
+├── backend/               # Express API and route algorithms
+│   ├── src/algorithms/    # Graph search and route optimization
+│   ├── src/controllers/   # API behavior
+│   └── tests/             # Jest and Supertest coverage
+├── README.md
+└── .gitignore
+```
+
+## Algorithms
+
+- **Dijkstra** for guaranteed shortest paths
+- **A*** for heuristic-guided routing
+- **Nearest Neighbor** for fast multi-stop sequencing
+- **2-opt** for removing inefficient route crossings
+- **Vehicle assignment** with capacity constraints
+- **Haversine distance** for geographic calculations
+
+## Scripts
+
+| Location | Command | Purpose |
+| --- | --- | --- |
+| `backend` | `npm run dev` | Start API with nodemon |
+| `backend` | `npm test` | Run backend tests |
+| `backend` | `npm run seed` | Load demo data |
+| `frontend` | `npm run dev` | Start Vite development server |
+| `frontend` | `npm run build` | Create production build |
+
+<div align="center">
+
+<br />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=2F80FF&height=90&section=footer" alt="Animated footer" />
+
+</div>
