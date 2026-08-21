@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #1D2A3D #0D1422;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #0D1422;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #1D2A3D;
+    border-radius: 3px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #2F80FF;
+  }
+
+  body {
+    font-family: 'Inter', 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: #070B14;
+    color: #e2e8f0;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-dark-surface/80 backdrop-blur-xl border border-dark-border rounded-xl;
+  }
+
+  .glass-panel-solid {
+    @apply bg-dark-surface border border-dark-border rounded-xl;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer;
+  }
+
+  .sidebar-item:hover {
+    @apply bg-dark-hover text-white;
+  }
+
+  .sidebar-item.active {
+    @apply bg-primary/10 text-primary border-l-2 border-primary;
+  }
+
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-light text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply bg-dark-secondary hover:bg-dark-hover text-gray-300 font-medium px-4 py-2 rounded-lg border border-dark-border transition-all duration-200 flex items-center gap-2;
+  }
+
+  .btn-danger {
+    @apply bg-danger/10 hover:bg-danger/20 text-danger font-medium px-4 py-2 rounded-lg transition-all duration-200;
+  }
+
+  .input-field {
+    @apply bg-dark-secondary border border-dark-border rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all;
+  }
+
+  .stat-card {
+    @apply glass-panel p-4 flex flex-col gap-1;
+  }
+
+  .badge {
+    @apply px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply bg-success/10 text-success;
+  }
+
+  .badge-warning {
+    @apply bg-warning/10 text-warning;
+  }
+
+  .badge-danger {
+    @apply bg-danger/10 text-danger;
+  }
+
+  .badge-info {
+    @apply bg-primary/10 text-primary;
+  }
+
+  .badge-purple {
+    @apply bg-purple/10 text-purple;
+  }
+
+  .map-container {
+    @apply w-full h-full rounded-xl overflow-hidden;
+  }
+
+  .loading-skeleton {
+    @apply animate-pulse bg-dark-secondary rounded;
+  }
+}
+
+/* Leaflet custom styles */
+.leaflet-container {
+  background: #0D1422;
+  font-family: 'Inter', sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #0D1422 !important;
+  border: 1px solid #1D2A3D !important;
+  border-radius: 12px !important;
+  color: white !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+.leaflet-popup-content {
+  margin: 12px !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.leaflet-popup-tip {
+  background: #0D1422 !important;
+}
+
+.leaflet-control-zoom a {
+  background: #0D1422 !important;
+  color: white !important;
+  border-color: #1D2A3D !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #1D2A3D !important;
+}
+
+.leaflet-control-attribution {
+  display: none !important;
+}
+
+/* Custom marker styles */
+.custom-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.vehicle-marker {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border: 2px solid white;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.vehicle-marker:hover {
+  transform: scale(1.15);
+}
+
+.depot-marker {
+  width: 44px;
+  height: 44px;
+  background: #2F80FF;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(47, 128, 255, 0.4);
+  border: 2px solid white;
+}
