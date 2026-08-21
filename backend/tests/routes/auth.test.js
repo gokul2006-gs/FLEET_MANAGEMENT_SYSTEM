@@ -56,6 +56,31 @@ describe('Auth Routes', () => {
       expect(res.body.data.token).toBeDefined();
     });
 
+    test('normalizes FLEET_MANAGER to manager', async () => {
+      const mockUser = {
+        _id: 'user-id-2',
+        name: 'Fleet Manager',
+        email: 'manager@example.com',
+        role: 'manager',
+        toJSON: jest.fn().mockReturnValue({ _id: 'user-id-2', role: 'manager' }),
+      };
+
+      User.findOne.mockResolvedValue(null);
+      User.create.mockResolvedValue(mockUser);
+
+      const res = await request(app)
+        .post('/api/auth/register')
+        .send({
+          name: 'Fleet Manager',
+          email: 'manager@example.com',
+          password: 'password123',
+          role: 'FLEET_MANAGER',
+        });
+
+      expect(res.status).toBe(201);
+      expect(User.create).toHaveBeenCalledWith(expect.objectContaining({ role: 'manager' }));
+    });
+
     test('returns 400 when name is missing', async () => {
       const res = await request(app)
         .post('/api/auth/register')

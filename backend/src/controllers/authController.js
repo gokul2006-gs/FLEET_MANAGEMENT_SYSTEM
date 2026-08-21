@@ -8,13 +8,14 @@ const generateToken = (id) => {
 export const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
+    const normalizedRole = role?.toLowerCase() === 'fleet_manager' ? 'manager' : role?.toLowerCase();
 
     const existing = await User.findOne({ email });
     if (existing) {
       return res.status(400).json({ success: false, message: 'Email already registered' });
     }
 
-    const user = await User.create({ name, email, password, role });
+    const user = await User.create({ name, email, password, role: normalizedRole });
     const token = generateToken(user._id);
 
     res.status(201).json({
