@@ -134,6 +134,48 @@ smart-route/
 | `frontend` | `npm run dev` | Start Vite development server |
 | `frontend` | `npm run build` | Create production build |
 
+## Deployment
+
+### Backend on Render
+
+1. Create a new **Web Service** on [Render](https://render.com) and connect this repository.
+2. Set **Root Directory** to `backend`.
+3. Set **Runtime** to `Node`.
+4. Set **Build Command** to `npm install`.
+5. Set **Start Command** to `npm start`.
+6. Add these environment variables in Render:
+
+```env
+MONGODB_URI=your_mongodb_atlas_connection_string
+JWT_SECRET=replace_with_a_long_random_secret
+CLIENT_URL=https://your-vercel-domain.vercel.app
+NODE_ENV=production
+```
+
+Render provides `PORT` automatically. After deployment, verify:
+`https://your-render-service.onrender.com/api/health`.
+
+Before deploying, allow Render to connect in MongoDB Atlas under **Network Access**. For a quick setup, add `0.0.0.0/0`, then restrict access later when your production network is known.
+
+### Frontend on Vercel
+
+1. Import the same repository into [Vercel](https://vercel.com).
+2. Set **Root Directory** to `frontend`.
+3. Vercel detects Vite automatically. Use `npm run build` as the build command and `dist` as the output directory.
+4. Add these environment variables for **Production**:
+
+```env
+VITE_API_URL=https://your-render-service.onrender.com/api
+VITE_GOOGLE_MAPS_API_KEY=your_browser_restricted_key
+```
+
+5. Deploy, copy the Vercel domain, update Render's `CLIENT_URL`, and redeploy the backend.
+
+Restrict the Google Maps browser key to your Vercel domain, for example:
+`https://your-vercel-domain.vercel.app/*`.
+
+Do not upload `.env` files or expose `MONGODB_URI` and `JWT_SECRET` in Vercel. Only `VITE_*` values belong in the frontend deployment.
+
 <div align="center">
 
 <br />
